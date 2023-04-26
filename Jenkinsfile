@@ -41,5 +41,6 @@ def generateRandomPassword() {
 }
 
 def md5(String password) {
-    MessageDigest.getInstance("MD5").digest(password.getBytes()).collect { String.format("%02x", it) }.join()
+    def command = "echo -n '${password}' | md5sum | awk '{print \$1}'"
+    return sh(script: command, returnStdout: true).trim()
 }
