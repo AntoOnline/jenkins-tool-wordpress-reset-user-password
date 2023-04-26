@@ -36,13 +36,7 @@ pipeline {
 }
 
 def generateRandomPassword() {
-    def randomString = new Random().with {
-        StringBuilder sb = new StringBuilder()
-        (1..8).each {
-            sb.append((nextInt(26) + 97) as Character)
-        }
-        return sb.toString()
-    }
+    def randomString = sh(script: "cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1", returnStdout: true).trim()
     return randomString
 }
 
